@@ -8,6 +8,24 @@ import './App.css'
 function App() {
   const [count, setCount] = useState(0)
   const [name, setName] = useState('unknown')
+  const [aiMessage, setAiMessage] = useState('')
+  const [aiSource, setAiSource] = useState('')
+  const [loadingAi, setLoadingAi] = useState(false)
+
+  const handleGenerateAi = async () => {
+    setLoadingAi(true)
+    try {
+      const res = await fetch('/api/ai')
+      const data = await res.json()
+      setAiMessage(data.message)
+      setAiSource(data.source || 'Cloudflare AI')
+    } catch (err) {
+      console.error(err)
+      setAiMessage('Error al consultar el Worker de IA')
+    } finally {
+      setLoadingAi(false)
+    }
+  }
 
   return (
     <>
@@ -18,12 +36,12 @@ function App() {
           <img src={viteLogo} className="vite" alt="Vite logo" />
         </div>
         <div>
-          <h1>Get started with Cloudflare</h1>
+          <h1>Práctica 5: Cloudflare + IA</h1>
           <p>
-            Edit <code>src/App.tsx</code> or <code>worker/index.ts</code> and save to test <code>HMR</code>
+            Aplicación en Cloudflare con soporte para <code>Workers AI</code>
           </p>
         </div>
-        <ul style={{ display: 'flex', gap: '1rem', listStyle: 'none', padding: 0 }}>
+        <ul style={{ display: 'flex', gap: '1rem', listStyle: 'none', padding: 0, flexWrap: 'wrap', justifyContent: 'center' }}>
           <li>
             <button
               className="counter"
@@ -33,20 +51,36 @@ function App() {
             </button>
           </li>
           <li>
-          <button
-            className="counter"
-            onClick={() => {
-              fetch('/api/')
-                .then((res) => res.json())
-                .then((data) => setName(data.name))
-            }}
-            aria-label='get name'
-          >
-            Name from API is: {name}
-          </button>
+            <button
+              className="counter"
+              onClick={() => {
+                fetch('/api/')
+                  .then((res) => res.json())
+                  .then((data) => setName(data.name))
+              }}
+              aria-label='get name'
+            >
+              API Worker: {name}
+            </button>
+          </li>
+          <li>
+            <button
+              className="counter ai-button"
+              onClick={handleGenerateAi}
+              disabled={loadingAi}
+              aria-label='generar consejo con IA'
+            >
+              {loadingAi ? 'Generando...' : '✨ Consejo con IA'}
+            </button>
           </li>
         </ul>
 
+        {aiMessage && (
+          <div className="ai-result-box">
+            <div className="ai-tag">🤖 {aiSource}</div>
+            <p className="ai-text">"{aiMessage}"</p>
+          </div>
+        )}
 
       </section>
 

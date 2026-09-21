@@ -17,6 +17,57 @@
   }
 }
 
+.ai-button {
+  background: linear-gradient(135deg, rgba(246, 130, 31, 0.2), rgba(255, 107, 107, 0.2));
+  border: 1px solid var(--accent);
+  cursor: pointer;
+}
+
+.ai-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ai-result-box {
+  margin: 10px auto 20px auto;
+  max-width: 520px;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  text-align: left;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.ai-tag {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.ai-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text);
+  font-style: italic;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .hero {
   position: relative;
 
