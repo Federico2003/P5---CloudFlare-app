@@ -8,6 +8,7 @@
 	"main": "worker/index.ts",
 	"compatibility_date": "2026-09-16",
 	"assets": {
+		"directory": "./dist",
 		"not_found_handling": "single-page-application"
 	},
 	"observability": {
@@ -21,8 +22,7 @@
 		{
 			"binding": "DB",
 			"database_name": "DB",
-			"database_id": "d325aaad-79f9-45bc-99bd-d09cb184186f",
-			"remote": true
+			"database_id": "d325aaad-79f9-45bc-99bd-d09cb184186f"
 		}
 	]
 	/**

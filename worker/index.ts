@@ -1,5 +1,6 @@
 interface Env {
   AI?: any;
+  DB?: any;
 }
 
 export default {
@@ -39,9 +40,35 @@ export default {
       });
     }
 
+    // Endpoint para consultar usuarios en D1
+    if (url.pathname === "/api/users") {
+      try {
+        if (env.DB) {
+          const { results } = await env.DB.prepare("SELECT * FROM users").all();
+          return Response.json(results);
+        }
+        return Response.json({ error: "D1 database no configurada" }, { status: 500 });
+      } catch (err: any) {
+        return Response.json({ error: err.message }, { status: 500 });
+      }
+    }
+
+    // Endpoint para consultar productos en D1
+    if (url.pathname === "/api/products") {
+      try {
+        if (env.DB) {
+          const { results } = await env.DB.prepare("SELECT * FROM products").all();
+          return Response.json(results);
+        }
+        return Response.json({ error: "D1 database no configurada" }, { status: 500 });
+      } catch (err: any) {
+        return Response.json({ error: err.message }, { status: 500 });
+      }
+    }
+
     if (url.pathname.startsWith("/api/")) {
       return Response.json({
-        name: "Cloudflare + IA",
+        name: "Cloudflare + IA + D1",
       });
     }
 
